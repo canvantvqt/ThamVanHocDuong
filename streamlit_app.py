@@ -55,7 +55,7 @@ st.markdown(
             text-align: right;
             margin-left: auto;
         }
-        .assistant::before { content: "TVS-tuyển sinh: "; font-weight: bold; }
+        .assistant::before { content: "TVS-THAM VẤN TÂM LÝ HỌC ĐƯỜNG: "; font-weight: bold; }
     </style>
     """,
     unsafe_allow_html=True
@@ -69,7 +69,7 @@ for message in st.session_state.messages:
         st.markdown(f'<div class="user">{message["content"]}</div>', unsafe_allow_html=True)
 
 # Ô nhập liệu cho người dùng
-if prompt := st.chat_input("Bạn quan tâm vấn đề nào ở TVS ạ!..."):
+if prompt := st.chat_input("Bạn cần THAM VẤN gì nào!..."):
     # Lưu tin nhắn người dùng vào session
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.markdown(f'<div class="user">{prompt}</div>', unsafe_allow_html=True)

@@ -17,13 +17,32 @@ body {
     background-color: #0f1116;
 }
 
+/* Tổng layout căn giữa */
+.main-block {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 /* Title zone */
 .header-title {
     text-align: center;
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 700;
-    padding: 10px 0 20px 0;
+    padding: 5px 0 15px 0;
     color: #ffffff;
+    line-height: 1.45;
+}
+
+/* Mô tả phụ */
+.sub-info {
+    background: #1c2333;
+    color: #d6dcff;
+    font-size: 14px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    margin: 0 auto 15px auto;
+    max-width: 700px;
 }
 
 /* Container chat */
@@ -33,7 +52,7 @@ body {
     padding: 10px 20px;
 }
 
-/* Tin nhắn trợ lý */
+/* Assistant bubble */
 .msg-assistant {
     background: #1c2333;
     color: #e8ecff;
@@ -57,7 +76,7 @@ body {
     opacity: 0.9;
 }
 
-/* Tin nhắn của học sinh */
+/* User bubble */
 .msg-user {
     background: #2c3e5c;
     color: #ffffff;
@@ -78,7 +97,7 @@ body {
     border-radius: 14px !important;
 }
 
-/* Logo */
+/* Logo căn giữa */
 .logo-zone {
     display: flex;
     justify-content: center;
@@ -87,6 +106,7 @@ body {
 
 </style>
 """, unsafe_allow_html=True)
+
 
 # ============================
 #       LOGO + TIÊU ĐỀ

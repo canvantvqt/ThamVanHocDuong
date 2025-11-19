@@ -2,7 +2,9 @@ import streamlit as st
 from openai import OpenAI
 import os
 
-# Hàm đọc file
+# ============================
+#       HÀM ĐỌC FILE
+# ============================
 def rfile(name_file):
     with open(name_file, "r", encoding="utf-8") as file:
         return file.read()
@@ -68,7 +70,7 @@ body {
 
 /* Prefix "Assistant" */
 .msg-assistant::before {
-    content: "🧠 TVS - Tham vấn học đường\n";
+    content: "🧠 TVS - Tham vấn học đường\\A";
     font-weight: 700;
     font-size: 14px;
     display: block;
@@ -107,7 +109,6 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
-
 # ============================
 #       LOGO + TIÊU ĐỀ
 # ============================
@@ -119,7 +120,7 @@ except:
     pass
 
 title_content = rfile("00.xinchao.txt")
-st.markdown(f'<div class="header-title">{title_content}</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="header-title">{str(title_content)}</div>', unsafe_allow_html=True)
 
 # ============================
 #       INIT OPENAI
@@ -133,15 +134,17 @@ if "messages" not in st.session_state:
     st.session_state.messages = [INITIAL_SYSTEM_MESSAGE, INITIAL_ASSISTANT_MESSAGE]
 
 # ============================
-#     Hiển thị lịch sử chat
+#     HIỂN THỊ LỊCH SỬ CHAT
 # ============================
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 
 for m in st.session_state.messages:
-    if m["role"] == "assistant":
-        st.markdown(f'<div class="msg-assistant">{m["content"]}</div>', unsafe_allow_html=True)
-    elif m["role"] == "user":
-        st.markdown(f'<div class="msg-user">{m["content"]}</div>', unsafe_allow_allow_html=True)
+    content = str(m.get("content", ""))
+    role = m.get("role", "")
+    if role == "assistant":
+        st.markdown(f'<div class="msg-assistant">{content}</div>', unsafe_allow_html=True)
+    elif role == "user":
+        st.markdown(f'<div class="msg-user">{content}</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -151,18 +154,17 @@ st.markdown('</div>', unsafe_allow_html=True)
 prompt = st.chat_input("Bạn muốn được THAM VẤN điều gì nè?...")
 
 if prompt:
-
     # Lưu tin nhắn người dùng
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-    st.markdown(f'<div class="msg-user">{prompt}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="msg-user">{str(prompt)}</div>', unsafe_allow_html=True)
 
     # Gọi API
     response_text = ""
     stream = client.chat.completions.create(
         model=rfile("module_chatgpt.txt").strip(),
-        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages],
+        messages=[{"role": m["role"], "content": str(m["content"])} for m in st.session_state.messages],
         stream=True,
     )
 

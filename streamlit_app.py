@@ -15,6 +15,8 @@ def rfile(name_file):
 st.markdown("""
 <style>
 
+/* --- BASE STYLES (Dành cho mọi màn hình, chủ yếu là Desktop) --- */
+
 body {
     background-color: #0f1116;
 }
@@ -36,7 +38,7 @@ body {
     line-height: 1.45;
 }
 
-/* Mô tả phụ */
+/* Mô tả phụ (Sub-info) - Giữ nguyên vì nó đã responsive tốt */
 .sub-info {
     background: #1c2333;
     color: #d6dcff;
@@ -51,7 +53,8 @@ body {
 .chat-container {
     max-width: 850px;
     margin: auto;
-    padding: 10px 20px;
+    /* Giảm padding ngang mặc định để có thêm không gian trên di động */
+    padding: 10px 10px; 
 }
 
 /* Assistant bubble */
@@ -62,7 +65,7 @@ body {
     border-radius: 14px;
     margin: 12px 0;
     width: fit-content;
-    max-width: 80%;
+    max-width: 85%; /* Tăng max-width lên một chút cho di động */
     box-shadow: 0px 4px 8px rgba(50, 50, 93, 0.35);
     font-size: 16px;
     border-left: 4px solid #4e8cff;
@@ -86,17 +89,11 @@ body {
     border-radius: 14px;
     margin: 12px 0;
     width: fit-content;
-    max-width: 80%;
+    max-width: 85%; /* Tăng max-width lên một chút cho di động */
     margin-left: auto;
     box-shadow: 0px 4px 8px rgba(50, 50, 93, 0.3);
     font-size: 16px;
     border-right: 4px solid #73d0ff;
-}
-
-/* Input chat */
-.stChatInputContainer {
-    background: #141722 !important;
-    border-radius: 14px !important;
 }
 
 /* Logo căn giữa */
@@ -106,9 +103,78 @@ body {
     margin-bottom: 10px;
 }
 
+/* Tùy chỉnh thanh Input chat của Streamlit */
+/* Selector này nhắm vào container bao quanh st.chat_input */
+.stChatInput {
+    /* Đảm bảo nó chiếm toàn bộ chiều rộng có thể */
+    width: 100%; 
+    /* Dùng !important để ghi đè CSS mặc định của Streamlit */
+}
+/* Selector cho hộp input */
+.stChatInput > div > div > textarea {
+    background: #141722 !important;
+    border-radius: 14px !important;
+    color: #ffffff !important; /* Đảm bảo màu chữ hiển thị tốt */
+}
+/* Selector cho container ngoài cùng của input */
+[data-testid="stChatInputContainer"] {
+    position: fixed; /* Cố định thanh input ở cuối màn hình */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px; /* Thêm padding xung quanh */
+    background: #0f1116; /* Màu nền giống màu body để che đi phần dưới */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5); /* Thêm bóng để tách biệt */
+    z-index: 1000;
+}
+/* Thêm khoảng trống ở cuối trang để nội dung không bị thanh input che mất */
+.stApp {
+    padding-bottom: 90px; /* Tạo khoảng trống bằng chiều cao thanh input cố định */
+}
+
+
+/* --- MEDIA QUERY CHO DI ĐỘNG (Màn hình nhỏ hơn 600px) --- */
+@media (max-width: 600px) {
+    
+    /* Điều chỉnh tiêu đề */
+    .header-title {
+        font-size: 18px; /* Giảm kích thước chữ tiêu đề */
+        padding: 5px 10px 10px 10px;
+    }
+    
+    /* Điều chỉnh logo */
+    .logo-zone {
+        margin-bottom: 5px;
+    }
+    
+    /* Giảm kích thước chữ của bong bóng chat */
+    .msg-assistant, .msg-user {
+        font-size: 15px; 
+        padding: 12px 16px;
+        max-width: 95%; /* Tăng tối đa để tận dụng không gian màn hình nhỏ */
+    }
+    
+    /* Điều chỉnh prefix */
+    .msg-assistant::before {
+        font-size: 13px;
+    }
+
+    /* Điều chỉnh container chat */
+    .chat-container {
+        padding: 5px 5px; /* Giảm padding ngang tối đa */
+    }
+
+    /* Điều chỉnh thanh input cố định */
+    [data-testid="stChatInputContainer"] {
+        padding: 8px 5px; /* Giảm padding trên điện thoại */
+    }
+    .stApp {
+        padding-bottom: 80px; /* Giảm padding để phù hợp với thanh input nhỏ hơn */
+    }
+}
+
 </style>
 """, unsafe_allow_html=True)
-
 # ============================
 #       LOGO + TIÊU ĐỀ
 # ============================
